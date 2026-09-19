@@ -50,7 +50,7 @@ struct ContentView: View {
             VStack(alignment: .leading) {
                 Text(item.name)
                     .font(.headline)
-                Text("\(item.age)")
+                Text(item.isActive ? "Active" : "Inactive")
             }
         }
         // The task modifier works with asynchronous
