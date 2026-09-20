@@ -24,7 +24,7 @@ import SwiftUI
 // We will only use three properties of
 // the many available in the returned JSON
 
-struct User: Codable {
+struct User: Codable, Hashable {
     var id: UUID
         var isActive: Bool
         var name: String
@@ -37,7 +37,7 @@ struct User: Codable {
     var friends: [Friend]
 }
 
-struct Friend: Codable {
+struct Friend: Codable, Hashable {
     var id: UUID
     var name: String
 }
@@ -46,19 +46,27 @@ struct Friend: Codable {
 struct ContentView: View {
     @State private var users = [User]()
     var body: some View {
-        List(users, id: \.id) { item in
-            VStack(alignment: .leading) {
-                Text(item.name)
-                    .font(.headline)
-                Text(item.isActive ? "Active" : "Inactive")
+        NavigationStack {
+            List(users, id: \.id) { user in
+                NavigationLink(value: user) {
+                    HStack {
+                        Text(user.name)
+                            .font(.headline)
+                        Text(user.isActive ? "Active" : "Inactive")
+                    }
+                }
             }
-        }
-        // The task modifier works with asynchronous
-        // functions
-        // await tells SwiftUI a sleep MIGHT happen here
-        
-        .task {
-            await loadData()
+            .navigationTitle("Friends")
+            .navigationDestination(for: User.self) {
+                user in DetailView(user: user)
+            }
+            // The task modifier works with asynchronous
+            // functions
+            // await tells SwiftUI a sleep MIGHT happen here
+            
+            .task {
+                await loadData()
+            }
         }
     }
     
