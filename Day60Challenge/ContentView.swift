@@ -56,7 +56,7 @@ struct ContentView: View {
                     }
                 }
             }
-            .navigationTitle("Friends")
+            .navigationTitle("Users")
             .navigationDestination(for: User.self) {
                 user in DetailView(user: user)
             }
