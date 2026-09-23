@@ -11,16 +11,18 @@ struct DetailView: View {
     let user: User
     
     var body: some View {
-        VStack(spacing: 3) {
+        VStack(alignment: .leading, spacing: 7) {
             Text("Detailed User Information")
                 .font(.title)
-            Text("Name: \(user.name)")
-            Text(user.isActive ? "Status: Active" : "Status: Inactive")
-            Text("Age: \(user.age)")
-            Text("Company: \(user.company)")
-            Text("Email: \(user.email)")
-            Text("About: \(user.about)")
-            Text("Registered: \(user.registered, format: .dateTime.month().day().year())")
+                .bold()
+            Text("\(Text("Name:").bold()) \(user.name)")
+            Text("\(Text("Status:").bold()) \(user.isActive ? "Active" : "Inactive")")
+            Text("\(Text("Age:").bold()) \(user.age)")
+            Text("\(Text("Company:").bold()) \(user.company)")
+            Text("\(Text("Email:").bold()) \(user.email)")
+            Text("\(Text("About:").bold()) \(user.about)")
+            Text("\(Text("Registered:").bold()) \(user.registered, format: .dateTime.month().day().year())")
+            Text("\(Text("Tags:").bold()) \(user.tags.joined(separator: ", "))")
         }
     }
 }
