@@ -10,19 +10,13 @@ import SwiftUI
 // Here we will be sending and receiving data
 // from the Internet
 // Combined with Codable support, we will
-// 1) convert Swift objects to JSON and
-//    send over the Internet
-// 2) receive JSON and convert that back
+// 2) receive JSON and convert that into
 //    to Swift objects
 // 3) when our request completes, we can
 //    immediately assign that data to
 //    properties in our SwiftUI views
 //    causing them to update the user
 //    inteface immediately
-// To demonstrate, we will load some example
-// music data from Apple's iTunes API
-// We will only use three properties of
-// the many available in the returned JSON
 
 struct User: Codable, Hashable {
     var id: UUID
@@ -63,7 +57,6 @@ struct ContentView: View {
             // The task modifier works with asynchronous
             // functions
             // await tells SwiftUI a sleep MIGHT happen here
-            
             .task {
                 await loadData()
             }
@@ -83,17 +76,15 @@ struct ContentView: View {
     // In this case, this means going to sleep
     // while our networking code happens
     // so that our app does not freeze up
-    // when downloading some iTunes API data
     
     // The three steps we want to complete:
     // 1. Create the URL from which we want to
-    //    retrieve data (in this case we want
-    //    to read from Apple servers)
+    //    retrieve data
     // 2. We want to fetch the data from that
     //    URL using Swift
     // 3. Decode that result into an array of User values
     func loadData() async {
-        // Get all songs by Taylor Swift
+        // Get some JSON data Paul created
         guard let url = URL(string: "https://www.hackingwithswift.com/samples/friendface.json") else {
             print("Invalid URL")
             return
@@ -111,9 +102,15 @@ struct ContentView: View {
             // IMPORTANT: must use "try await"
             //  in that order
             // try: there might be errors here
-            // await" there might be sleeping here
+            // await: there might be sleeping here
             let (data, _) = try await URLSession.shared.data(from: url)
             let decoder = JSONDecoder()
+            
+            // The date each user registered has a very
+            // specific format: 2015-11-10T01:47:18-00:00
+            // This is known as ISO-8601, and is so common that
+            // there’s a built-in dateDecodingStrategy called
+            // .iso8601 that decodes it automatically
             decoder.dateDecodingStrategy = .iso8601
             users = try decoder.decode([User].self, from: data)
         } catch {
