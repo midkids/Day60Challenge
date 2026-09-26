@@ -98,6 +98,12 @@ struct DetailView: View {
                         .foregroundStyle(.secondary)
                 } else {
                     ForEach(user.friends, id: \.id) { friend in
+                        // Label is a SwiftUI view designed to
+                        // combine an icon with text
+                        // Although the title appears first in the
+                        // initializer, SwiftUI’s standard Label
+                        // style lays it out as: person image,
+                        // friend name
                         Label(friend.name, systemImage: "person")
                     }
                 }
