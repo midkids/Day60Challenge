@@ -28,7 +28,7 @@ struct User: Codable, Hashable {
         var about: String
         var registered: Date
         var tags: [String]
-    var friends: [Friend]
+        var friends: [Friend]
 }
 
 struct Friend: Codable, Hashable {
