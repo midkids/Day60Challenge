@@ -84,6 +84,10 @@ struct ContentView: View {
     //    URL using Swift
     // 3. Decode that result into an array of User values
     func loadData() async {
+        
+        // Check to ensure users data is not already loaded
+        guard users.isEmpty else { return }
+
         // Get some JSON data Paul created
         guard let url = URL(string: "https://www.hackingwithswift.com/samples/friendface.json") else {
             print("Invalid URL")
@@ -104,6 +108,7 @@ struct ContentView: View {
             // try: there might be errors here
             // await: there might be sleeping here
             let (data, _) = try await URLSession.shared.data(from: url)
+            
             let decoder = JSONDecoder()
             
             // The date each user registered has a very
@@ -112,6 +117,7 @@ struct ContentView: View {
             // there’s a built-in dateDecodingStrategy called
             // .iso8601 that decodes it automatically
             decoder.dateDecodingStrategy = .iso8601
+            
             users = try decoder.decode([User].self, from: data)
         } catch {
             // If our data retrieval above fails for any
