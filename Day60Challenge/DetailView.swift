@@ -35,6 +35,12 @@ struct DetailView: View {
     }
 
     var body: some View {
+    // List is the most natural semantic and visual match for
+    // this particular read-only, sectioned data
+    // List provides scrolling, Section styling, separators,
+    // platform-standard margins, accessibility behavior, and
+    // efficient handling of the variable-length friends
+    // collection.
         List {
             Section("Profile") {
                 // LabeledContent is a SwiftUI container that
