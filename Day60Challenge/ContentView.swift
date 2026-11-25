@@ -20,15 +20,15 @@ import SwiftUI
 
 struct User: Codable, Hashable {
     var id: UUID
-        var isActive: Bool
-        var name: String
-        var age: Int
-        var company: String
-        var email: String
-        var about: String
-        var registered: Date
-        var tags: [String]
-        var friends: [Friend]
+    var isActive: Bool
+    var name: String
+    var age: Int
+    var company: String
+    var email: String
+    var about: String
+    var registered: Date
+    var tags: [String]
+    var friends: [Friend]
 }
 
 struct Friend: Codable, Hashable {
@@ -65,7 +65,7 @@ struct ContentView: View {
     
     // Networking can be slow compared to local
     // functions - Async tells Swift to
-    // leave this this code working away in the
+    // leave this code working away in the
     // background while the main app carries on
     // working
     
@@ -100,7 +100,7 @@ struct ContentView: View {
             // the data we want and also metadata
             // We don't want that metadata
             // This statement says: place the returned
-            // actual data in the variable data
+            // actual data in the variable: data,
             // and the underscore says to discard
             // the metadata
             // IMPORTANT: must use "try await"
